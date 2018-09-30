@@ -1,0 +1,26 @@
+#!/bin/bash
+clear
+echo "Loading Cookie..."
+kuki="__cfduid=d77097f3e0b4bdc1178809bad8559e7de1538324326; PHPSESSID=2750a467751d4dc9aebeae9f3f257b9f; __auc=430c55d11662b467bada8ca6bd4; _ga=GA1.2.386220251.1538324332; _gid=GA1.2.1870751556.1538324332; __sharethis_cookie_test__=1; _gat_gtag_UA_108888718_13=1; __asc=a96f5fb81662b6c0cda34b62441; __unam=7639673-1662b467e0c-37bdfd55-4"
+sleep 1
+visit=$(curl -s 'https://earnyourcrypto.com/visit-friends' -H 'authority: earnyourcrypto.com' -H 'pragma: no-cache' -H 'cache-control: no-cache' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7' -H "cookie: $kuki")
+visit=$(echo $visit|awk -F "user_id" '{print $2}'|awk -F "'" '{print $1}')
+while true; do
+tembak=$(curl -s "https://earnyourcrypto.com/friend.php?user_id$visit" -H 'pragma: no-cache' -H "cookie: $kuki" -H 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7' -H 'user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36' -H 'accept: /' -H 'cache-control: no-cache' -H 'authority: earnyourcrypto.com' -H 'referer: https://earnyourcrypto.com/visit-friends')
+echo $tembak|awk -F '<center><a href="' '{print $2}'
+balance=$(curl -s 'https://earnyourcrypto.com/home' -H 'authority: earnyourcrypto.com' -H 'pragma: no-cache' -H 'cache-control: no-cache' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7' -H "cookie: $kuki")
+balance=$(echo $balance|awk -F '-lg" href="https://earnyourcrypto.com/exchange">' '{print $2}'|awk -F "<" '{print $1}')
+echo "============================================"
+echo "Your Balance: $balance"
+echo "============================================"
+cekcapca=$(echo $tembak|grep "window.location='https://earnyourcrypto.com/captcha"|awk -F ".com/" '{print $2}'|awk -F "'" '{print $1}')
+if [ ! -f $cekcapca ]; then #jika string capca ada
+clear
+echo "Chaptca Terdeteksi, skipping ..."
+sleep 3
+skip=$(curl -s 'https://earnyourcrypto.com/captcha' -H 'authority: earnyourcrypto.com' -H 'pragma: no-cache' -H 'cache-control: no-cache' -H 'origin: https://earnyourcrypto.com' -H 'upgrade-insecure-requests: 1' -H 'content-type: application/x-www-form-urlencoded' -H 'user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'referer: https://earnyourcrypto.com/captcha' -H 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7' -H "cookie: $kuki" --data 'captcha_type=2&click_captcha_coinhive=I%27m+not+a+robot%21&g-recaptcha-response=')
+clear
+fi
+sleep 5
+done
+
