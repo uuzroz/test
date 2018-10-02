@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 echo "Loading Cookie..."
-kuki="__cfduid=d77097f3e0b4bdc1178809bad8559e7de1538324326; PHPSESSID=2750a467751d4dc9aebeae9f3f257b9f; __auc=430c55d11662b467bada8ca6bd4; _ga=GA1.2.386220251.1538324332; _gid=GA1.2.1870751556.1538324332; __sharethis_cookie_test__=1; _gat_gtag_UA_108888718_13=1; __asc=d5a72ea91662bb64905f4c9a1ae; __unam=7639673-1662b467e0c-37bdfd55-6"
+kuki="__cfduid=d77097f3e0b4bdc1178809bad8559e7de1538324326; PHPSESSID=2750a467751d4dc9aebeae9f3f257b9f; __auc=430c55d11662b467bada8ca6bd4; _ga=GA1.2.386220251.1538324332; __sharethis_cookie_test__=1; _gid=GA1.2.383192237.1538478484; _gat_gtag_UA_108888718_13=1; __asc=d94253e91663476ad22312e304b; __unam=7639673-1662b467e0c-37bdfd55-8"
 sleep 1
 visit=$(curl -s 'https://earnyourcrypto.com/visit-friends' -H 'authority: earnyourcrypto.com' -H 'pragma: no-cache' -H 'cache-control: no-cache' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'accept-language: id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7' -H "cookie: $kuki")
 visit=$(echo $visit|awk -F "user_id" '{print $2}'|awk -F "'" '{print $1}')
